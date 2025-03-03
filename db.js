@@ -1,18 +1,15 @@
-const mysql = require('mysql');
+const mysql = require("mysql2");
 
-const db = mysql.createConnection({
-    host: "sql211.infinityfree.com", // Reemplaza con el host de tu BD
-    user: "if0_38439434", // Tu usuario de InfinityFree
-    password: "m9XQUnPJEia8Mg", // Tu contraseña de InfinityFree
-    database: "if0_38439434_clinica_veterinaria" // Nombre exacto de la BD
+// 📌 Configuración de la conexión a la BD
+const pool = mysql.createPool({
+  host: process.env.DB_HOST || "localhost", // Usa variables de entorno para mayor seguridad
+  user: process.env.DB_USER || "root",
+  password: process.env.DB_PASSWORD || "",
+  database: process.env.DB_NAME || "clinica_veterinaria",
+  waitForConnections: true,
+  connectionLimit: 10,
+  queueLimit: 0
 });
 
-db.connect((err) => {
-    if (err) {
-        console.error('❌ Error de conexión:', err);
-    } else {
-        console.log('✅ Conexión exitosa a la base de datos.');
-    }
-});
-
-module.exports = db;
+// 📌 Exportamos la conexión en modo Promises
+module.exports = pool.promise();

@@ -12,8 +12,9 @@ app.use(bodyParser.json());
 // Usar las rutas
 app.use(routes);
 
-const PORT = 5000;
+// 📌 Puerto para localhost
+const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
-    console.log(`Servidor corriendo en http://localhost:${PORT}`);
+    console.log(`✅ Servidor corriendo en http://localhost:${PORT}`);
 });
